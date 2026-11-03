@@ -1,1 +1,131 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Calculadora de pensión IMSS · Ley 73, Ley 97 y Modalidad 40</title>
+<style>
+:root{--bg:#f6f7f4;--card:#fff;--tx:#1b2a24;--mu:#5d6b64;--ac:#0f6b4f;--ac2:#e6f2ec;--bd:#dbe1dc;--wa:#fff4d6;--wt:#6b4e00;--bad:#a33;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101613;--card:#18211c;--tx:#e8efe9;--mu:#9bab a2;--mu:#9baba2;--ac:#4cc79a;--ac2:#1c2f27;--bd:#2a3730;--wa:#33290d;--wt:#f0d68a;--bad:#f08a8a}}
+:root[data-theme="dark"]{--bg:#101613;--card:#18211c;--tx:#e8efe9;--mu:#9baba2;--ac:#4cc79a;--ac2:#1c2f27;--bd:#2a3730;--wa:#33290d;--wt:#f0d68a;--bad:#f08a8a}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:720px;margin:0 auto;padding:16px}
+h1{font-size:1.4rem;margin:.2em 0}h2{font-size:1.05rem;margin:0 0 10px}
+p.s{color:var(--mu);margin:0 0 14px;font-size:.92rem}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px;margin-bottom:12px}
+.g{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+label{display:flex;flex-direction:column;font-size:.8rem;color:var(--mu);gap:3px}
+input[type=number],select{font:inherit;color:var(--tx);background:var(--bg);border:1px solid var(--bd);border-radius:9px;padding:9px;width:100%;box-sizing:border-box}
+.ck{flex-direction:row;align-items:center;gap:8px;font-size:.9rem;color:var(--tx);grid-column:1/-1}
+.ck input{width:18px;height:18px}
+.warn{background:var(--wa);color:var(--wt);border-radius:12px;padding:12px;font-size:.86rem;margin-bottom:12px}
+.warn b{display:block;margin-bottom:4px}
+.res{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid var(--bd)}
+.res:last-child{border:0}.res small{display:block;color:var(--mu);font-size:.78rem}
+.res .v{font-weight:700;font-size:1.15rem;white-space:nowrap}
+.best{background:var(--ac2);border-radius:10px;padding:10px;margin:0 -4px}
+.best .v{color:var(--ac)}
+.ver{background:var(--ac);color:#fff;border-radius:14px;padding:14px;margin-bottom:12px}
+:root[data-theme="dark"] .ver{color:#06251a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .ver{color:#06251a}}
+.ver b{font-size:1.15rem}
+.bad{color:var(--bad)}
+.foot{font-size:.78rem;color:var(--mu)}
+.scroll{overflow-x:auto}
+</style></head>
+<body><main>
+<h1>LC Calculadora de pensión IMSS</h1>
+<p class="s">Compara Ley 73 vs. Ley 97 y simula la Modalidad 40 con las reglas vigentes desde el 22 de octubre de 2026. Montos mensuales aproximados en pesos de hoy.</p>
+
+<div class="warn"><b>Nuevas reglas de Modalidad 40 (medida temporal)</b>
+Acuerdo del Consejo Técnico del IMSS del 10-oct-2026, vigente desde el 22-oct-2026: salario de inscripción máximo = último SBC al causar baja + 1 UMA (antes, hasta 25 UMA); sin retroactividad; inscripción solo digital; independientes no pueden contratarla; quienes ya están inscritos conservan sus condiciones hasta terminar el periodo contratado. Hay riesgo jurídico: especialistas sostienen que un acuerdo no puede limitar lo que dice el art. 218 de la Ley del Seguro Social, y se espera un estudio actuarial (abr-2027) y propuesta de reforma (oct-2027).</div>
+
+<div class="card"><h2>Tus datos</h2><div class="g">
+<label>Edad actual<input id="edad" type="number" value="58" min="30" max="70"></label>
+<label>Edad de retiro<select id="ret"><option>60</option><option>61</option><option>62</option><option>63</option><option>64</option><option selected>65</option></select></label>
+<label>Semanas cotizadas hoy<input id="sem" type="number" value="1200" min="0"></label>
+<label>Último SBC diario ($)<input id="sbc" type="number" value="600" min="0"></label>
+<label>Salario promedio diario, últimas 250 semanas ($)<input id="prom" type="number" value="580" min="0"></label>
+<label>Saldo actual en AFORE ($)<input id="saldo" type="number" value="400000" min="0"></label>
+<label class="ck"><input id="pre97" type="checkbox" checked> Empecé a cotizar antes del 1 de julio de 1997 (puedes elegir Ley 73)</label>
+<label class="ck"><input id="cony" type="checkbox"> Incluir asignación por cónyuge (+15 % en Ley 73)</label>
+<label class="ck"><input id="baja" type="checkbox"> Ya me di de baja (no sigo cotizando en un empleo)</label>
+</div></div>
+
+<div class="card"><h2>Supuestos</h2><div class="g">
+<label>UMA diaria 2026 ($)<input id="uma" type="number" value="117.31" step="0.01"></label>
+<label>Aportación total a AFORE (% del SBC)<input id="ap" type="number" value="12" step="0.1"></label>
+<label>Rendimiento real anual AFORE (%)<input id="rd" type="number" value="3.5" step="0.1"></label>
+<label>Años que dura la pensión AFORE<input id="pay" type="number" value="20" min="5" max="40"></label>
+<label>Pensión mínima garantizada Ley 73 ($/mes, 2026)<input id="pmg73" type="number" value="10636.54" step="0.01"></label>
+<label>Pensión mínima garantizada Ley 97 ($/mes, según tu tabla; promedio ≈ 6,600)<input id="pmg97" type="number" value="6600"></label>
+</div></div>
+
+<div class="card" id="m40c" style="display:none"><h2>Modalidad 40</h2><div class="g">
+<label>Semanas a pagar en Modalidad 40<input id="m40s" type="number" value="250" min="0" max="250"></label>
+<label>Salario con el que quieres inscribirte ($ diario)<input id="m40w" type="number" value="1500" min="0"></label>
+<label>Cuota 2026 (% del salario)<input id="cuota" type="number" value="14.438" step="0.001"></label>
+</div><p class="s" style="margin:8px 0 0">La cuota sube gradualmente hasta 18.8 % en 2030.</p></div>
+
+<div id="out"></div>
+<p class="foot">Es una estimación informativa, no un cálculo oficial. Confirma tus semanas y salarios en tu Constancia de Semanas Cotizadas del IMSS y consulta a un asesor antes de contratar la Modalidad 40. Incluye la pensión mínima garantizada de Ley 73 ($10,636.54 en 2026); la de Ley 97 es un supuesto editable (varía aprox. entre $3,500 y $10,600 según tu tabla). No considera inflación futura ni cambios legales posteriores.</p>
+</main>
+<script>
+const T=[[1,80,.563],[1.25,77.11,.814],[1.5,58.18,1.178],[1.75,49.23,1.43],[2,42.67,1.615],[2.25,37.65,1.756],[2.5,33.68,1.868],[2.75,30.48,1.958],[3,27.83,2.033],[3.25,25.6,2.096],[3.5,23.7,2.149],[3.75,22.07,2.195],[4,20.65,2.235],[4.25,19.39,2.271],[4.5,18.29,2.302],[4.75,17.3,2.33],[5,16.41,2.355],[5.25,15.61,2.377],[5.5,14.88,2.398],[5.75,14.22,2.417],[6,13.62,2.434],[1e9,13,2.45]];
+const AF={60:.75,61:.8,62:.85,63:.9,64:.95,65:1};
+const $=i=>document.getElementById(i),n=i=>parseFloat($(i).value)||0;
+const M=x=>x.toLocaleString("es-MX",{style:"currency",currency:"MXN",maximumFractionDigits:0});
+function p73(prom,sem,ret,con,uma){
+  if(sem<500)return 0;
+  prom=Math.min(prom,25*uma);
+  const v=prom/uma,r=T.find(t=>v<=t[0]+1e-9);
+  const ex=sem-500,y=Math.floor(ex/52),f=ex%52,inc=y+(f>=26?1:f>=13?.5:0);
+  const pct=(r[1]+r[2]*inc)/100;
+  let d=prom*pct*AF[ret];
+  if(con)d=Math.min(d*1.15,prom);
+  return d*30.4;
+}
+function p97(saldo,sbc,ap,N,rd,pay,work){
+  const r=Math.pow(1+rd/100,1/12)-1,k=12*N;
+  let fv=saldo*Math.pow(1+r,k);
+  if(work&&r>0)fv+=sbc*30.4*ap/100*(Math.pow(1+r,k)-1)/r;
+  const p=12*pay;
+  return r>0?fv*r/(1-Math.pow(1+r,-p)):fv/p;
+}
+function calc(){
+  const edad=n("edad"),ret=+$("ret").value,N=Math.max(0,ret-edad),baja=$("baja").checked,uma=n("uma");
+  $("m40c").style.display=baja?"block":"none";
+  const sem=n("sem")+(baja?0:52*N),sbc=n("sbc"),prom=n("prom"),cony=$("cony").checked;
+  const rows=[],g73=n("pmg73"),g97=n("pmg97"),w73=x=>x>0?Math.max(x,g73):0;
+  const a97=p97(n("saldo"),sbc,n("ap"),N,n("rd"),n("pay"),!baja);
+  const need=Math.min(1000,750+25*Math.max(0,new Date().getFullYear()+N-2021));
+  const ok97=sem>=need;
+  let html="";
+  if($("pre97").checked){
+    const r73=p73(prom,sem,ret,cony,uma),a73=w73(r73);
+    rows.push(["Ley 73"+(baja?" (sin Modalidad 40)":""),a73,sem<500?"Necesitas al menos 500 semanas":(r73<g73?"Elevada a la pensión mínima garantizada":"Promedio de las últimas 250 semanas")]);
+    if(baja){
+      const m=Math.min(n("m40s"),250),ms=n("m40s"),w=n("m40w"),c=n("cuota")/100;
+      const wO=Math.min(w,25*uma),wN=Math.min(w,sbc+uma);
+      const avg=s=>(m*s+(250-m)*prom)/250;
+      const pO=w73(p73(avg(wO),sem+ms,ret,cony,uma)),pN=w73(p73(avg(wN),sem+ms,ret,cony,uma));
+      rows.push(["Ley 73 + Mod. 40 · reglas anteriores",pO,"Solo aplica si ya estabas inscrito (salario hasta "+M(wO)+" diarios)"]);
+      rows.push(["Ley 73 + Mod. 40 · reglas nuevas",pN,"Salario máximo de inscripción: "+M(wN)+" diarios"]);
+      const cost=wN*7*ms*c,gain=pN-a73;
+      html+='<div class="card"><h2>Modalidad 40 con reglas nuevas</h2><div class="res"><span>Costo total estimado<small>'+ms+" semanas a "+M(wN)+" diarios</small></span><span class=v>"+M(cost)+'</span></div><div class="res"><span>Aumento mensual de pensión</span><span class="v '+(gain<=0?"bad":"")+'">'+M(gain)+'</span></div><div class="res"><span>Se recupera en<small>Sin considerar inflación ni rendimientos</small></span><span class="v">'+(gain>0?(cost/gain).toFixed(0)+" meses":"No se recupera")+"</span></div></div>";
+    }
+  }
+  rows.push(["Ley 97 (AFORE)",ok97?Math.max(a97,g97):a97,ok97?(a97<g97?"Elevada a la pensión mínima garantizada (supuesto)":"Retiro programado a "+n("pay")+" años"):"Faltan semanas: se piden "+need+"; sin ellas solo retiras tu saldo"]);
+  const best=rows.reduce((a,b)=>b[1]>a[1]?b:a);
+  const base=rows.filter(r=>!/Mod\. 40/.test(r[0])||r===best);
+  let v='<div class="ver"><b>Te conviene: '+best[0]+"</b><br>"+M(best[1])+" al mes aprox.";
+  if(!$("pre97").checked)v+="<br>Al empezar a cotizar después de julio de 1997, tu régimen es la Ley 97.";
+  v+="</div>";
+  let t='<div class="card"><h2>Comparativo mensual</h2>';
+  rows.forEach(r=>{t+='<div class="res'+(r===best?" best":"")+'"><span>'+r[0]+"<small>"+r[2]+'</small></span><span class="v">'+M(r[1])+"</span></div>"});
+  $("out").innerHTML=v+t+"</div>"+html+tab();
+}
+function tab(){const edad=n("edad"),baja=$("baja").checked,uma=n("uma"),g73=n("pmg73"),g97=n("pmg97"),pre=$("pre97").checked;let h='<div class="card scroll"><h2>Pensión según la edad de retiro</h2><table style="width:100%;border-collapse:collapse;font-size:.9rem"><tr style="text-align:left;color:var(--mu)"><th>Edad</th>'+(pre?"<th>Ley 73</th>":"")+"<th>Ley 97</th></tr>";for(let r=Math.max(60,edad);r<=65;r++){const N=r-edad,s=n("sem")+(baja?0:52*N),a=p73(n("prom"),s,r,$("cony").checked,uma),b=p97(n("saldo"),n("sbc"),n("ap"),N,n("rd"),n("pay"),!baja);h+='<tr style="border-top:1px solid var(--bd)"><td>'+r+"</td>"+(pre?"<td>"+(a>0?M(Math.max(a,g73)):"—")+"</td>":"")+"<td>"+M(s>=Math.min(1000,750+25*(new Date().getFullYear()+N-2021))?Math.max(b,g97):b)+"</td></tr>"}return h+"</table></div>"}
+document.querySelectorAll("input,select").forEach(e=>e.addEventListener("input",calc));
+calc();
+</script></body></html>
 
