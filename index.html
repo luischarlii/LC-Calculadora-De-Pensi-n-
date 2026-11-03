@@ -73,6 +73,25 @@ input[type=number],select{font:inherit;color:var(--tx);background:var(--bg);bord
 </div>
 
 <style>
+.lc-radio-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 15px 0;
+}
+
+.lc-radio-header img {
+  width: 55px;
+  height: 55px;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+.lc-radio-header h1 {
+  margin: 0;
+  font-size: 25px;
+}
 
 .lc-radio-header {
   display: flex;
@@ -227,8 +246,12 @@ input[type=number],select{font:inherit;color:var(--tx);background:var(--bg);bord
 
 
 <main>
+<div class="lc-radio-header">
+  <img src="./pension.png" alt="LC Radio Universal">
+  
 <h1>Calculadora de pensión: IMSS, ISSSTE y otras instituciones</h1>
-<p class="s">Compara Ley 73 vs. Ley 97 y simula la Modalidad 40 con las reglas vigentes desde el 22 de octubre de 2026. Montos mensuales aproximados en pesos de hoy.</p>
+</div>
+  <p class="s">Compara Ley 73 vs. Ley 97 y simula la Modalidad 40 con las reglas vigentes desde el 22 de octubre de 2026. Montos mensuales aproximados en pesos de hoy.</p>
 
 <div class="warn imo"><b>Nuevas reglas de Modalidad 40 (medida temporal)</b>
 Acuerdo del Consejo Técnico del IMSS del 10-oct-2026, vigente desde el 22-oct-2026: salario de inscripción máximo = último SBC al causar baja + 1 UMA (antes, hasta 25 UMA); sin retroactividad; inscripción solo digital; independientes no pueden contratarla; quienes ya están inscritos conservan sus condiciones hasta terminar el periodo contratado. Hay riesgo jurídico: especialistas sostienen que un acuerdo no puede limitar lo que dice el art. 218 de la Ley del Seguro Social, y se espera un estudio actuarial (abr-2027) y propuesta de reforma (oct-2027).</div>
