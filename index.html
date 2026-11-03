@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Calculadora de pensión IMSS · Ley 73, Ley 97 y Modalidad 40</title>
+<title>LC Calculadora de pensión IMSS · Ley 73, Ley 97 y Modalidad 40</title>
 <style>
 :root{--bg:#f6f7f4;--card:#fff;--tx:#1b2a24;--mu:#5d6b64;--ac:#0f6b4f;--ac2:#e6f2ec;--bd:#dbe1dc;--wa:#fff4d6;--wt:#6b4e00;--bad:#a33;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101613;--card:#18211c;--tx:#e8efe9;--mu:#9bab a2;--mu:#9baba2;--ac:#4cc79a;--ac2:#1c2f27;--bd:#2a3730;--wa:#33290d;--wt:#f0d68a;--bad:#f08a8a}}
@@ -32,15 +32,14 @@ input[type=number],select{font:inherit;color:var(--tx);background:var(--bg);bord
 .foot{font-size:.78rem;color:var(--mu)}
 .scroll{overflow-x:auto}
 </style></head>
-<body><main>
-<h1>LC Calculadora de pensión IMSS</h1>
+<body>
 <!-- Botón Apoyo con Mercado Pago en la cabecera -->
 <div class="lc-support">
   <button id="lcDonateBtn" class="lc-support-trigger"
           aria-expanded="false">
     <span class="lc-heart">♡</span>
     <span class="lc-support-text">
-      <strong>Te Gustaria Apoyar LC Calculadora Pension</strong>
+      <strong>Te Gustaria Apoyar LC Radio Universal</strong>
       <small>Donaciones voluntarias</small>
     </span>
     <span id="lcArrow">⌄</span>
@@ -56,7 +55,7 @@ input[type=number],select{font:inherit;color:var(--tx);background:var(--bg);bord
     </div>
 
     <p><strong>Beneficiario:</strong><br>
-      LC Calculadora De Pension</p>
+      LC Radio Universal</p>
 
     <p><strong>CLABE interbancaria:</strong></p>
 
@@ -224,13 +223,17 @@ input[type=number],select{font:inherit;color:var(--tx);background:var(--bg);bord
 })();
 </script>
 <!-- Botón Apoyo mercado Final -->
-  
+
+
+<main>
+<h1>Calculadora de pensión: IMSS, ISSSTE y otras instituciones</h1>
 <p class="s">Compara Ley 73 vs. Ley 97 y simula la Modalidad 40 con las reglas vigentes desde el 22 de octubre de 2026. Montos mensuales aproximados en pesos de hoy.</p>
 
-<div class="warn"><b>Nuevas reglas de Modalidad 40 (medida temporal)</b>
+<div class="warn imo"><b>Nuevas reglas de Modalidad 40 (medida temporal)</b>
 Acuerdo del Consejo Técnico del IMSS del 10-oct-2026, vigente desde el 22-oct-2026: salario de inscripción máximo = último SBC al causar baja + 1 UMA (antes, hasta 25 UMA); sin retroactividad; inscripción solo digital; independientes no pueden contratarla; quienes ya están inscritos conservan sus condiciones hasta terminar el periodo contratado. Hay riesgo jurídico: especialistas sostienen que un acuerdo no puede limitar lo que dice el art. 218 de la Ley del Seguro Social, y se espera un estudio actuarial (abr-2027) y propuesta de reforma (oct-2027).</div>
 
-<div class="card"><h2>Tus datos</h2><div class="g">
+<div class="card"><h2>Institución</h2><label>Régimen<select id="inst"><option value="imss">IMSS (Ley 73, Ley 97, Modalidad 40)</option><option value="issste">ISSSTE (Décimo Transitorio / Cuentas Individuales)</option><option value="otra">Otra institución federal o estatal</option></select></label></div>
+<div class="card" id="imss"><h2>Tus datos IMSS</h2><div class="g">
 <label>Edad actual<input id="edad" type="number" value="58" min="30" max="70"></label>
 <label>Edad de retiro<select id="ret"><option>60</option><option>61</option><option>62</option><option>63</option><option>64</option><option selected>65</option></select></label>
 <label>Semanas cotizadas hoy<input id="sem" type="number" value="1200" min="0"></label>
@@ -242,13 +245,34 @@ Acuerdo del Consejo Técnico del IMSS del 10-oct-2026, vigente desde el 22-oct-2
 <label class="ck"><input id="baja" type="checkbox"> Ya me di de baja (no sigo cotizando en un empleo)</label>
 </div></div>
 
+<div class="card" id="iss" style="display:none"><h2>Tus datos ISSSTE</h2><div class="g">
+<label>Sexo<select id="isx"><option value="m">Mujer</option><option value="h">Hombre</option></select></label>
+<label>Régimen<select id="ireg"><option value="d">Décimo Transitorio</option><option value="c">Cuentas Individuales</option></select></label>
+<label>Edad actual<input id="ied" type="number" value="52"></label>
+<label>Años de servicio hoy<input id="iy" type="number" value="25"></label>
+<label>Sueldo básico mensual, promedio último año ($)<input id="isb" type="number" value="25000"></label>
+<label>Tope mensual de pensión ($, ≈10 salarios mínimos)<input id="itope" type="number" value="94512"></label>
+<label>Saldo cuenta individual + bono ($)<input id="isa" type="number" value="300000"></label>
+<label>Aportación (% del sueldo)<input id="iap" type="number" value="11.3" step="0.1"></label>
+</div></div>
+<div class="card" id="otr" style="display:none"><h2>Otra institución (federal o estatal)</h2><div class="g">
+<label>Edad actual<input id="oed" type="number" value="50"></label>
+<label>Años de servicio hoy<input id="oy" type="number" value="22"></label>
+<label>Sueldo mensual base de la pensión ($)<input id="osb" type="number" value="20000"></label>
+<label>% del sueldo por año de servicio<input id="otas" type="number" value="3.33" step="0.01"></label>
+<label>Años mínimos de servicio<input id="omin" type="number" value="30"></label>
+<label>Edad mínima<input id="oage" type="number" value="55"></label>
+<label>Tope (% del sueldo)<input id="otp" type="number" value="100"></label>
+<label>Saldo cuenta individual, si aplica ($)<input id="osa" type="number" value="0"></label>
+<label>Aportación a cuenta individual (% sueldo)<input id="oap" type="number" value="0" step="0.1"></label>
+</div><p class="s" style="margin:8px 0 0">Cada institución (ISSFAM, Pemex, CFE, ISSEMyM, institutos estatales, etc.) tiene reglas propias: captura los parámetros de tu ley o reglamento.</p></div>
 <div class="card"><h2>Supuestos</h2><div class="g">
-<label>UMA diaria 2026 ($)<input id="uma" type="number" value="117.31" step="0.01"></label>
-<label>Aportación total a AFORE (% del SBC)<input id="ap" type="number" value="12" step="0.1"></label>
+<label class="imo">UMA diaria 2026 ($)<input id="uma" type="number" value="117.31" step="0.01"></label>
+<label class="imo">Aportación total a AFORE (% del SBC)<input id="ap" type="number" value="12" step="0.1"></label>
 <label>Rendimiento real anual AFORE (%)<input id="rd" type="number" value="3.5" step="0.1"></label>
 <label>Años que dura la pensión AFORE<input id="pay" type="number" value="20" min="5" max="40"></label>
-<label>Pensión mínima garantizada Ley 73 ($/mes, 2026)<input id="pmg73" type="number" value="10636.54" step="0.01"></label>
-<label>Pensión mínima garantizada Ley 97 ($/mes, según tu tabla; promedio ≈ 6,600)<input id="pmg97" type="number" value="6600"></label>
+<label class="imo">Pensión mínima garantizada Ley 73 ($/mes, 2026)<input id="pmg73" type="number" value="10636.54" step="0.01"></label>
+<label class="imo">Pensión mínima garantizada Ley 97 ($/mes, según tu tabla; promedio ≈ 6,600)<input id="pmg97" type="number" value="6600"></label>
 </div></div>
 
 <div class="card" id="m40c" style="display:none"><h2>Modalidad 40</h2><div class="g">
@@ -282,7 +306,7 @@ function p97(saldo,sbc,ap,N,rd,pay,work){
   const p=12*pay;
   return r>0?fv*r/(1-Math.pow(1+r,-p)):fv/p;
 }
-function calc(){
+function calc(){const I=$("inst").value;$("imss").style.display=I=="imss"?"":"none";$("iss").style.display=I=="issste"?"":"none";$("otr").style.display=I=="otra"?"":"none";$("m40c").style.display="none";document.querySelectorAll(".imo").forEach(e=>e.style.display=I=="imss"?"":"none");if(I=="issste")return iss();if(I=="otra")return otra();
   const edad=n("edad"),ret=+$("ret").value,N=Math.max(0,ret-edad),baja=$("baja").checked,uma=n("uma");
   $("m40c").style.display=baja?"block":"none";
   const sem=n("sem")+(baja?0:52*N),sbc=n("sbc"),prom=n("prom"),cony=$("cony").checked;
@@ -315,8 +339,15 @@ function calc(){
   rows.forEach(r=>{t+='<div class="res'+(r===best?" best":"")+'"><span>'+r[0]+"<small>"+r[2]+'</small></span><span class="v">'+M(r[1])+"</span></div>"});
   $("out").innerHTML=v+t+"</div>"+html+tab();
 }
+function tbl(rows,nt){const f=rows.find(r=>r[3]),l=rows[rows.length-1];let v=f?'<div class="ver"><b>Puedes pensionarte desde los '+f[0]+" años</b><br>"+M(f[1])+" al mes aprox. ("+f[2]+")"+(l&&l[3]&&l!==f?"<br>A los "+l[0]+": "+M(l[1])+" al mes":"")+"</div>":'<div class="ver"><b>Con estos datos no cumples requisitos antes de los 65 años</b></div>';v+='<div class="card scroll"><h2>Pensión según la edad de retiro</h2><table style="width:100%;border-collapse:collapse;font-size:.9rem"><tr style="text-align:left;color:var(--mu)"><th>Edad</th><th>Mensual</th><th>Modalidad</th></tr>'+rows.map(r=>'<tr style="border-top:1px solid var(--bd)"><td>'+r[0]+"</td><td>"+(r[3]?M(r[1]):"—")+"</td><td>"+r[2]+"</td></tr>").join("")+"</table></div>";$("out").innerHTML=v+'<div class="warn">'+nt+"</div>"}
+function iss(){const h=$("isx").value=="h",ed=n("ied"),y0=n("iy"),sb=n("isb"),tp=n("itope"),d=$("ireg").value=="d",need=h?30:28,amin=h?58:56,pt=[50,52.5,55,57.5,60,62.5,65,67.5,70,72.5,75,80,85,90,95],R=[];for(let a=Math.max(55,ed);a<=65;a++){const y=y0+a-ed;let p=0,m="No cumple requisitos",ok=false;if(d){if(a>=amin&&y>=need){p=sb;m="Jubilación (100 % del sueldo básico)";ok=true}else if(a>=60&&y>=15){p=sb*pt[Math.min(Math.floor(y),29)-15]/100;m="Edad y tiempo de servicio";ok=true}p=Math.min(p,tp)}else if(a>=60&&y>=25){p=p97(n("isa"),sb/30.4,n("iap"),a-ed,n("rd"),n("pay"),true);m="Retiro programado (cuenta individual)";ok=true}else m=a<60?"Se requieren 60 años":"Se requieren 25 años de servicio";R.push([a,p,m,ok])}tbl(R,"<b>Reglas ISSSTE usadas</b>Décimo Transitorio 2026 (reforma publicada el 24-jun-2025): jubilación al 100 % del sueldo básico con 56 años y 28 de servicio (mujeres) o 58 y 30 (hombres); algunas fuentes citan 58/60 años, así que verifica. Edad y tiempo de servicio: desde 60 años con 15 de servicio, 50 % más incrementos por año (tabla aproximada, confírmala con el ISSSTE). Cuentas Individuales: 60 años y 25 de servicio, con rendimiento real supuesto. Es una estimación, no un cálculo oficial.")}
+function otra(){const ed=n("oed"),y0=n("oy"),sb=n("osb"),t=n("otas"),tp=n("otp"),R=[];for(let a=Math.max(50,ed);a<=65;a++){const y=y0+a-ed,bd=a>=n("oage")&&y>=n("omin")?sb*Math.min(y*t,tp)/100:0,ci=a>=60&&(n("osa")>0||n("oap")>0)?p97(n("osa"),sb/30.4,n("oap"),a-ed,n("rd"),n("pay"),true):0,p=Math.max(bd,ci);R.push([a,p,p?(bd>=ci?"Beneficio definido":"Cuenta individual"):"No cumple requisitos",p>0])}tbl(R,"<b>Modelo genérico</b>Pensión = sueldo base × (años de servicio × % por año, con tope), una vez cumplidos los años y la edad mínimos; si capturas saldo o aportación se compara con una cuenta individual. Los valores por defecto son ejemplos: usa los de tu ley o reglamento. No es un cálculo oficial.")}
 function tab(){const edad=n("edad"),baja=$("baja").checked,uma=n("uma"),g73=n("pmg73"),g97=n("pmg97"),pre=$("pre97").checked;let h='<div class="card scroll"><h2>Pensión según la edad de retiro</h2><table style="width:100%;border-collapse:collapse;font-size:.9rem"><tr style="text-align:left;color:var(--mu)"><th>Edad</th>'+(pre?"<th>Ley 73</th>":"")+"<th>Ley 97</th></tr>";for(let r=Math.max(60,edad);r<=65;r++){const N=r-edad,s=n("sem")+(baja?0:52*N),a=p73(n("prom"),s,r,$("cony").checked,uma),b=p97(n("saldo"),n("sbc"),n("ap"),N,n("rd"),n("pay"),!baja);h+='<tr style="border-top:1px solid var(--bd)"><td>'+r+"</td>"+(pre?"<td>"+(a>0?M(Math.max(a,g73)):"—")+"</td>":"")+"<td>"+M(s>=Math.min(1000,750+25*(new Date().getFullYear()+N-2021))?Math.max(b,g97):b)+"</td></tr>"}return h+"</table></div>"}
 document.querySelectorAll("input,select").forEach(e=>e.addEventListener("input",calc));
 calc();
-</script></body></html>
-
+</script>
+<script
+  src="https://luischarlii.github.io/LC-Ads/lc-ads.js"
+  data-app="all">
+</script>
+</body></html>
