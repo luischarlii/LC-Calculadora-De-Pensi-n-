@@ -1,0 +1,20 @@
+{
+  "id": "./",
+  "name": "LC Calculadora Pensiones
+  "short_name": "Pensiones",
+  "description": "Estimacion para el calculo de pensiones",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#111827",
+  "theme_color": "#111827",
+  "icons": [
+    {
+      "src": "./pension.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
