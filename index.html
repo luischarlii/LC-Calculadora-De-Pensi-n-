@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html lang="es"><head><meta charset="utf-8">
- <link rel="manifest" href="./manifest.json"> 
-   <link rel="icon" href="./pension.svg" type="image/svg+xml">
- <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>LC Calculadora de pensión IMSS · Ley 73, Ley 97 y Modalidad 40</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Calculadora de pensión IMSS · Ley 73, Ley 97 y Modalidad 40</title>
 <style>
 :root{--bg:#f6f7f4;--card:#fff;--tx:#1b2a24;--mu:#5d6b64;--ac:#0f6b4f;--ac2:#e6f2ec;--bd:#dbe1dc;--wa:#fff4d6;--wt:#6b4e00;--bad:#a33;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101613;--card:#18211c;--tx:#e8efe9;--mu:#9bab a2;--mu:#9baba2;--ac:#4cc79a;--ac2:#1c2f27;--bd:#2a3730;--wa:#33290d;--wt:#f0d68a;--bad:#f08a8a}}
@@ -34,14 +32,19 @@ input[type=number],select{font:inherit;color:var(--tx);background:var(--bg);bord
 .foot{font-size:.78rem;color:var(--mu)}
 .scroll{overflow-x:auto}
 </style></head>
-<body>
+<body><main>
+<h1>Calculadora de pensión: IMSS, ISSSTE y otras instituciones</h1>
+<p class="s">Compara Ley 73 vs. Ley 97 y simula la Modalidad 40 con las reglas vigentes desde el 22 de octubre de 2026. Montos mensuales aproximados en pesos de hoy.</p>
+
+<!-- ===== 2. Apoyo Mercado Pago ===== -->
 <!-- Botón Apoyo con Mercado Pago en la cabecera -->
+<!-- Cambia "Calculadora de Pensión" (abajo y en "Beneficiario") por el nombre de la app donde lo instales -->
 <div class="lc-support">
   <button id="lcDonateBtn" class="lc-support-trigger"
           aria-expanded="false">
-   <span class="lc-heart">♡</span>
+    <span class="lc-heart">♡</span>
     <span class="lc-support-text">
-      <strong>Te Gustaria Apoyar al Proyecto: LC Calculadora de Pensiones</strong>    
+      <strong>Te Gustaria Apoyar Calculadora de Pensión</strong>
       <small>Donaciones voluntarias</small>
     </span>
     <span id="lcArrow">⌄</span>
@@ -57,24 +60,25 @@ input[type=number],select{font:inherit;color:var(--tx);background:var(--bg);bord
     </div>
 
     <p><strong>Beneficiario:</strong><br>
-      LC Calculadora Pensiones Imss-Issste y Otras</p>
+      Calculadora de Pensión</p>
+    <!-- "Calculadora de Pensión" aquí debe quedar igual que en el botón de arriba -->
 
     <p><strong>CLABE interbancaria:</strong></p>
 
     <div class="lc-clabe">
-      <span id="lcClabe">L...C...(722969010061473580)</span>
-      <button id="lcCopyBtn">Copiar</button>
+      <span id="lcClabe">CLABE oculta •••• •••• •••• ••••</span>
+      <button id="lcCopyBtn">Copiar CLABE</button>
     </div>
 
     <p class="lc-thanks">
       ¡Gracias por apoyar este proyecto!
     </p>
     <small>Tu aportación es completamente voluntaria.</small>
-    <div>Sirviendo a la comunidad | Aplicación Gratuita </div>
   </div>
 </div>
 
 <style>
+
 .lc-radio-header {
   display: flex;
   align-items: center;
@@ -217,24 +221,24 @@ input[type=number],select{font:inherit;color:var(--tx);background:var(--bg);bord
   copy.addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(clabe);
-      copy.textContent = "¡Copiada!";
     } catch {
-      copy.textContent = "Copia manualmente";
+      // Respaldo para iPhone/Safari si el portapapeles moderno falla
+      const t = document.createElement("textarea");
+      t.value = clabe;
+      t.style.position = "fixed";
+      t.style.opacity = "0";
+      document.body.appendChild(t);
+      t.select();
+      try { document.execCommand("copy"); } catch {}
+      document.body.removeChild(t);
     }
+    copy.textContent = "¡Copiada!";
+    setTimeout(() => (copy.textContent = "Copiar CLABE"), 2000);
   });
 })();
 </script>
 <!-- Botón Apoyo mercado Final -->
-
-
-<main>
-<div class="lc-radio-header">
-  <img src="./pension.png" alt="LC Calculadora de Pensiones">
-  
-<h1>Calculadora de pensión: IMSS, ISSSTE y otras instituciones</h1>
-</div>
-  <p class="s">Compara Ley 73 vs. Ley 97 y simula la Modalidad 40 con las reglas vigentes desde el 22 de octubre de 2026. Montos mensuales aproximados en pesos de hoy.</p>
-
+<!-- ===== fin Apoyo Mercado Pago ===== -->
 <div class="warn imo"><b>Nuevas reglas de Modalidad 40 (medida temporal)</b>
 Acuerdo del Consejo Técnico del IMSS del 10-oct-2026, vigente desde el 22-oct-2026: salario de inscripción máximo = último SBC al causar baja + 1 UMA (antes, hasta 25 UMA); sin retroactividad; inscripción solo digital; independientes no pueden contratarla; quienes ya están inscritos conservan sus condiciones hasta terminar el periodo contratado. Hay riesgo jurídico: especialistas sostienen que un acuerdo no puede limitar lo que dice el art. 218 de la Ley del Seguro Social, y se espera un estudio actuarial (abr-2027) y propuesta de reforma (oct-2027).</div>
 
@@ -351,9 +355,34 @@ function otra(){const ed=n("oed"),y0=n("oy"),sb=n("osb"),t=n("otas"),tp=n("otp")
 function tab(){const edad=n("edad"),baja=$("baja").checked,uma=n("uma"),g73=n("pmg73"),g97=n("pmg97"),pre=$("pre97").checked;let h='<div class="card scroll"><h2>Pensión según la edad de retiro</h2><table style="width:100%;border-collapse:collapse;font-size:.9rem"><tr style="text-align:left;color:var(--mu)"><th>Edad</th>'+(pre?"<th>Ley 73</th>":"")+"<th>Ley 97</th></tr>";for(let r=Math.max(60,edad);r<=65;r++){const N=r-edad,s=n("sem")+(baja?0:52*N),a=p73(n("prom"),s,r,$("cony").checked,uma),b=p97(n("saldo"),n("sbc"),n("ap"),N,n("rd"),n("pay"),!baja);h+='<tr style="border-top:1px solid var(--bd)"><td>'+r+"</td>"+(pre?"<td>"+(a>0?M(Math.max(a,g73)):"—")+"</td>":"")+"<td>"+M(s>=Math.min(1000,750+25*(new Date().getFullYear()+N-2021))?Math.max(b,g97):b)+"</td></tr>"}return h+"</table></div>"}
 document.querySelectorAll("input,select").forEach(e=>e.addEventListener("input",calc));
 calc();
-</script>
+</script><!-- ===== 1. LC-Ads ===== -->
 <script
-  src="https://luischarlii.github.io/LC-Ads/lc-ads.js"
+  src="https://luischarlii.github.io/LC-Ads/lc-ads.js?v=2"
   data-app="all">
 </script>
+<!-- ===== fin LC-Ads ===== -->
+<!-- ===== 3. Contador de usuarios ===== -->
+<!-- Cambia el valor de APP por el nombre de la app donde lo instales -->
+<script>
+(function () {
+  var APP = "pension";
+  var ENDPOINT = "https://contador.paragugliar.workers.dev/ping";
+  try {
+    var id = localStorage.getItem("uid");
+    if (!id) {
+      id = crypto.randomUUID ? crypto.randomUUID() : Date.now() + "-" + Math.random().toString(36).slice(2);
+      localStorage.setItem("uid", id);
+    }
+    var hoy = new Date().toDateString();
+    if (localStorage.getItem("ping_" + APP) === hoy) return; // ya se reportó hoy
+    fetch(ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain" },
+      body: JSON.stringify({ app: APP, id: id }),
+      keepalive: true,
+    }).then(function () { localStorage.setItem("ping_" + APP, hoy); }).catch(function () {});
+  } catch (e) {}
+})();
+</script>
+<!-- ===== fin Contador de usuarios ===== -->
 </body></html>
