@@ -359,7 +359,7 @@ function iss(){const h=$("isx").value=="h",ed=n("ied"),y0=n("iy"),sb=n("isb"),tp
 function otra(){const ed=n("oed"),y0=n("oy"),sb=n("osb"),t=n("otas"),tp=n("otp"),R=[];for(let a=Math.max(50,ed);a<=65;a++){const y=y0+a-ed,bd=a>=n("oage")&&y>=n("omin")?sb*Math.min(y*t,tp)/100:0,ci=a>=60&&(n("osa")>0||n("oap")>0)?p97(n("osa"),sb/30.4,n("oap"),a-ed,n("rd"),n("pay"),true):0,p=Math.max(bd,ci);R.push([a,p,p?(bd>=ci?"Beneficio definido":"Cuenta individual"):"No cumple requisitos",p>0])}tbl(R,"<b>Modelo genérico</b>Pensión = sueldo base × (años de servicio × % por año, con tope), una vez cumplidos los años y la edad mínimos; si capturas saldo o aportación se compara con una cuenta individual. Los valores por defecto son ejemplos: usa los de tu ley o reglamento. No es un cálculo oficial.")}
 function tab(){const edad=n("edad"),baja=$("baja").checked,uma=n("uma"),g73=n("pmg73"),g97=n("pmg97"),pre=$("pre97").checked;let h='<div class="card scroll"><h2>Pensión según la edad de retiro</h2><table style="width:100%;border-collapse:collapse;font-size:.9rem"><tr style="text-align:left;color:var(--mu)"><th>Edad</th>'+(pre?"<th>Ley 73</th>":"")+"<th>Ley 97</th></tr>";for(let r=Math.max(60,edad);r<=65;r++){const N=r-edad,s=n("sem")+(baja?0:52*N),a=p73(n("prom"),s,r,$("cony").checked,uma),b=p97(n("saldo"),n("sbc"),n("ap"),N,n("rd"),n("pay"),!baja);h+='<tr style="border-top:1px solid var(--bd)"><td>'+r+"</td>"+(pre?"<td>"+(a>0?M(Math.max(a,g73)):"—")+"</td>":"")+"<td>"+M(s>=Math.min(1000,750+25*(new Date().getFullYear()+N-2021))?Math.max(b,g97):b)+"</td></tr>"}return h+"</table></div>"}
 /* ===== Cobro: gratis = rango aproximado; de pago = detalle completo + PDF ===== */
-const WORKER="https://pensonatebien.paragugliar.workers.dev",PRECIO="$79";
+const WORKER="https://pensonatebien.paragugliar.workers.dev",PRECIO="$1";
 let PAID=false,CODE="",MSG="",_full="";
 const ls={g:k=>{try{return localStorage.getItem(k)||""}catch(e){return ""}},s:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}}};
 const money=s=>parseInt(String(s).replace(/\D/g,""))||0;
@@ -379,11 +379,12 @@ function gate(){
    +'<p>¿Ya tienes código?</p><div class="prow"><input id="pcod" placeholder="PEN-XXXXX-XXXXX" autocapitalize="characters"><button class="pbtn2" onclick="redeemTxt()">Desbloquear</button></div>'
    +'<div class="pmsg">'+MSG+'</div></div>';
 }
-async function check(c){try{const r=await fetch(WORKER+"/validar?codigo="+encodeURIComponent(c));return (await r.json()).valido?1:0}catch(e){return -1}}
+function devId(){let d=ls.g("pen_dev");if(!d){d=Array.from(crypto.getRandomValues(new Uint8Array(12)),x=>x.toString(16).padStart(2,"0")).join("");ls.s("pen_dev",d)}return d}
+async function check(c){try{const r=await fetch(WORKER+"/validar?codigo="+encodeURIComponent(c)+"&dev="+devId()),j=await r.json();return j.valido?1:(j.motivo==="limite"?2:0)}catch(e){return -1}}
 async function unlock(c,cache){
   const v=await check(c);
   if(v===1||(v===-1&&cache)){PAID=true;CODE=c;ls.s("pen_codigo",c);MSG=""}
-  else MSG=v===0?"Código inválido.":"Sin conexión. Intenta de nuevo.";
+  else MSG=v===0?"Código inválido.":v===2?"Este código ya se usó en 3 dispositivos. Escríbeme para reiniciarlo.":"Sin conexión. Intenta de nuevo.";
   render();
 }
 function redeemTxt(){const c=($("pcod").value||"").trim().toUpperCase();if(c)unlock(c,false)}
