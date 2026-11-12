@@ -449,7 +449,20 @@ function genPdf(){
     }
   });
   y+=10;const f=document.querySelector("p.foot");if(f)tx(f.textContent,8,0,110);
-  d.save("reporte-pension.pdf");
+  PDFF=new File([d.output("blob")],"reporte-pension.pdf",{type:"application/pdf"});
+  MSG='PDF listo. <button class="pbtn2" onclick="sharePdf()">Guardar / compartir PDF</button>';
+  render();sharePdf();
+}
+let PDFF=null;
+function sharePdf(){
+  if(!PDFF)return;
+  if(navigator.canShare&&navigator.canShare({files:[PDFF]})){
+    navigator.share({files:[PDFF],title:"Reporte de pensión"}).catch(()=>{});
+  }else{
+    const u=URL.createObjectURL(PDFF),a=document.createElement("a");
+    a.href=u;a.download="reporte-pension.pdf";document.body.appendChild(a);a.click();a.remove();
+    setTimeout(()=>URL.revokeObjectURL(u),4000);
+  }
 }
 document.querySelectorAll("input,select").forEach(e=>e.addEventListener("input",render));
 render();
